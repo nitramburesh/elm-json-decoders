@@ -1,20 +1,22 @@
-module Main exposing (..)
+module Main exposing (main)
 
 import Browser
-import Html exposing (Html, text, div, h1, img)
-import Html.Attributes exposing (src)
+import Html exposing (Html)
+
 
 
 ---- MODEL ----
 
 
 type alias Model =
-    {}
+    ()
 
 
-init : ( Model, Cmd Msg )
-init =
-    ( {}, Cmd.none )
+init : () -> ( Model, Cmd Msg )
+init _ =
+    ( ()
+    , Cmd.none
+    )
 
 
 
@@ -22,12 +24,14 @@ init =
 
 
 type Msg
-    = NoOp
+    = NoUpdate
 
 
 update : Msg -> Model -> ( Model, Cmd Msg )
-update msg model =
-    ( model, Cmd.none )
+update NoUpdate model =
+    ( model
+    , Cmd.none
+    )
 
 
 
@@ -35,11 +39,8 @@ update msg model =
 
 
 view : Model -> Html Msg
-view model =
-    div []
-        [ img [ src "/logo.svg" ] []
-        , h1 [] [ text "Your Elm App is working!" ]
-        ]
+view _ =
+    Html.h1 [] [ Html.text "Hello world!" ]
 
 
 
@@ -50,7 +51,7 @@ main : Program () Model Msg
 main =
     Browser.element
         { view = view
-        , init = \_ -> init
+        , init = init
         , update = update
         , subscriptions = always Sub.none
         }

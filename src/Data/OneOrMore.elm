@@ -1,0 +1,21 @@
+module Data.OneOrMore exposing (Model, decode, toModel)
+
+import Iso8601
+import Json.Decode as Decode
+import Time
+
+
+type Model a
+    = Model (Data a)
+
+
+type alias Data a =
+    ( a, List a )
+
+
+toModel : Data a -> Model a
+toModel =
+    Model
+
+
+decode : Decode.Decoder a -> Decode.Decoder (Model a)
