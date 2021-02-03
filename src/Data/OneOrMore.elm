@@ -1,8 +1,6 @@
 module Data.OneOrMore exposing (Model, decode, toModel)
 
-import Iso8601
 import Json.Decode as Decode
-import Time
 
 
 type Model a

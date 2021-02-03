@@ -12,7 +12,6 @@ module Data.Family exposing
     )
 
 import Data.OneOrMore as OneOrMore
-import Iso8601
 import Json.Decode as Decode
 import Json.Decode.Pipeline as Pipeline
 
