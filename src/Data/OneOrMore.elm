@@ -17,3 +17,5 @@ toModel =
 
 
 decode : Decode.Decoder a -> Decode.Decoder (Model a)
+decode decoder =
+    

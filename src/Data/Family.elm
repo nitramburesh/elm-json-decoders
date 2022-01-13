@@ -60,7 +60,66 @@ decode =
     Decode.map Model decodeFamily
 
 
+decodeMother : Decode.Decoder Mother
+decodeMother =
+    Decode.string
+        |> Decode.andThen
+            (\string ->
+                case string of
+                    "mother" ->
+                        Decode.succeed Mother
+
+                    _ ->
+                        Decode.fail (string ++ " is not Mother")
+            )
+
+
+decodeFather : Decode.Decoder Father
+decodeFather =
+    Decode.string
+        |> Decode.andThen
+            (\string ->
+                case string of
+                    "father" ->
+                        Decode.succeed Father
+
+                    _ ->
+                        Decode.fail (string ++ " is not Father")
+            )
+
+
+decodeParents : Decode.Decoder Parents
+decodeParents =
+    Decode.succeed Parents
+        |> Pipeline.optional "mother" (Decode.map Just decodeMother) Nothing
+        |> Pipeline.optional "father" (Decode.map Just decodeFather) Nothing
+
+
+decodeSiblings : Decode.Decoder Siblings
+decodeSiblings =
+    Decode.list Decode.string
+        |> Decode.andThen
+            (\siblings ->
+                case siblings of
+                    0 ->
+                        Decode.succeed OnlyChild
+
+                    0 ->
+                        Decode.succeed OnlyChild
+
+                    0 ->
+                        Decode.succeed OnlyChild
+
+                    0 ->
+                        Decode.succeed OnlyChild
+            )
+
+
 decodeFamily : Decode.Decoder Family
+decodeFamily =
+    Decode.succeed Family
+        |> Pipeline.required "parents" decodeParents
+        |> Pipeline.required "siblings" decodeSiblings
 
 
 toSiblings : ( List Sister, List Brother ) -> Siblings

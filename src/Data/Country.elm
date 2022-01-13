@@ -34,5 +34,5 @@ decodeCountry =
                         Decode.succeed Other
 
                     _ ->
-                        Decode.fail (country ++ " is invalid country")
+                        Decode.fail (country ++ " is not a valid country")
             )
