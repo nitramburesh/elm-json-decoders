@@ -10,7 +10,7 @@ type Model
 
 
 type alias Address =
-    { address : String
+                { address : String
     , city : String
     , zip : String
     , country : Country.Model
@@ -23,3 +23,9 @@ decode =
 
 
 decodeAddress : Decode.Decoder Address
+decodeAddress = 
+    Decode.succeed Address
+        |> Pipeline.required "address" Decode.string
+        |> Pipeline.required "city" Decode.string
+        |> Pipeline.required "zip" Decode.string
+        |> Pipeline.required "country" Country.decode

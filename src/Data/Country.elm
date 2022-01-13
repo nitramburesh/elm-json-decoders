@@ -19,3 +19,20 @@ decode =
 
 
 decodeCountry : Decode.Decoder Country
+decodeCountry =
+    Decode.string
+        |> Decode.andThen
+            (\country ->
+                case country of
+                    "cz" ->
+                        Decode.succeed CZ
+
+                    "sk" ->
+                        Decode.succeed SK
+
+                    "other" ->
+                        Decode.succeed Other
+
+                    _ ->
+                        Decode.fail (country ++ " is invalid country")
+            )

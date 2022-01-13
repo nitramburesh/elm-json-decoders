@@ -32,3 +32,31 @@ decode =
 
 
 decodeDocument : Decode.Decoder Document
+decodeDocument =
+    Decode.succeed Document
+        |> Pipeline.required "id" Decode.string
+        |> Pipeline.required "expireDate" Date.decode
+        |> Pipeline.required "documentType" decodeDocumentType
+
+
+decodeDocumentType : Decode.Decoder DocumentType
+decodeDocumentType =
+    Decode.string
+        |> Decode.andThen
+            (\documentType ->
+                case documentType of
+                    "identityCard" ->
+                        Decode.succeed IdentityCard
+
+                    "drivingLicense" ->
+                        Decode.map DrivingLicense decodeDrivingLicenseData
+
+                    _ ->
+                        Decode.fail (documentType ++ " is not a valid document type")
+            )
+
+
+decodeDrivingLicenseData : Decode.Decoder DrivingLicenseData
+decodeDrivingLicenseData =
+    Decode.succeed DrivingLicenseData
+        |> Pipeline.required "group" Decode.string
